@@ -14,11 +14,23 @@
 
 sf::Time TimePerFrame = sf::seconds(1.f / 60);
 
-void processEvents(sf::RenderWindow &window, bool &rotate, float &angleX, float &angleY, float &zPos)
+float lx = 0.0f, lz = -1.0f;
+float angle = 0.0f;
+float yPos = -5; // y-axis position
+
+// These are really high at the moment because movement is being handled inside the loop but outside the frames constraint if statement
+// It would be a better idea to have a kind of boolean value to toggle for W,A,S,D inside the current key checks, and then
+// simple update the actual movement variables if they are true
+float turnSpeed = 0.000009f; // speed of turning
+float movementSpeed = 0.00003f;
+
+void processEvents(sf::RenderWindow &window, bool &rotate, float &angleX, float &angleY, float &zPos, float &xPos)
 {
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
+		
+
 		// Close window : exit
 		if (event.type == sf::Event::Closed)
 			window.close();
@@ -47,12 +59,11 @@ void processEvents(sf::RenderWindow &window, bool &rotate, float &angleX, float 
 			angleY -= 0.1f;
 		}
 
-		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::W)) {
-			zPos -= 0.5;
-		}
-
-		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::S)) {
-			zPos += 0.5;
+		
+		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::PageUp)){
+			//angle += 0.01f;
+			//lx = sin(angle);
+			//lz = -cos(angle);
 		}
 
 		if (event.type == sf::Event::MouseWheelMoved)
@@ -80,6 +91,7 @@ int main()
 	glClearColor(0.3f, 0.3f, 0.3f, 0.f); // set the background colour for when we clear the screen RGBA values in the 0.0 to 1.0 range. This gives us a nice grey background.
 
 	float zPos = -5; // z-axis position
+	float xPos = -5; // z-axis position
 
 				 // Setup a perspective projection & Camera position
 
@@ -111,12 +123,39 @@ int main()
 	// Start game loop
 	while (window.isOpen())
 	{
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			xPos += lx * movementSpeed;
+			zPos += lz * movementSpeed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			angle -= turnSpeed;
+			lx = sin(angle);
+			lz = -cos(angle);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			xPos -= lx * movementSpeed;
+			zPos -= lz * movementSpeed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			angle += turnSpeed;
+			lx = sin(angle);
+			lz = -cos(angle);
+		}
+
 		timeSinceLastUpdate += clock.restart();
 
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
 			timeSinceLastUpdate -= TimePerFrame;
-			processEvents(window, rotate, angleX, angleY, zPos);
+			processEvents(window, rotate, angleX, angleY, zPos, xPos);
+
+			glEnable(GL_FOG);
+			glFogf(GL_FOG_DENSITY, 0.05f);
 
 			//Prepare for drawing
 			// Clear color and depth buffer
@@ -124,11 +163,29 @@ int main()
 
 																// Apply some transformations for the cube
 																// The GL_MODELVIEW is used for transforming our model
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
 
-			player.update(sf::Vector3f(0.f, 0.f, zPos), sf::Vector3f(angleX, angleY, 0)); // position the cube model at z-position -5; ie. away from us
-			camera.update(player);
+			// A and D rotate left and right at the moment
+			gluLookAt(xPos, 1.0f, zPos,
+				xPos + lx, 1.0f, zPos + lz,
+				0.0f, 1.0f, 0.0f);
 
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			// I've commented these out for the moment for testing and because there's no need to update the "player" or enemy cube's position for version 1
+			//player.update(sf::Vector3f(xPos, 0.f, zPos), sf::Vector3f(angleX, angleY, 0)); // position the cube model at z-position -5; ie. away from us
+			//camera.update(player);
+
+			//Simple ground to give us some frame of reference
+			// Draw ground
+			glColor3f(0.9f, 0.9f, 0.9f);
+			glBegin(GL_QUADS);
+			glVertex3f(-120.0f, -5.0f, -100.0f);
+			glVertex3f(-120.0f, -5.0f, 100.0f);
+			glVertex3f(120.0f, -5.0f, 100.0f);
+			glVertex3f(120.0f, -5.0f, -100.0f);
+			glEnd();
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glColor3f(1, 0, 0);
 			player.draw();
 
