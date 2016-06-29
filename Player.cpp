@@ -1,33 +1,88 @@
 #include "stdafx.h"
 #include "Character.h"
 
-Player::Player()
+Player::Player(int hitPoints)
 {
+	this -> hitPoints = hitPoints;
+
+	// Health bar
+	healthBarHeight = 20.f;
+	healthBar = sf::RectangleShape(sf::Vector2f(hitPoints*4, healthBarHeight));
+	healthBar.setPosition(5, 5);
+	healthBar.setFillColor(sf::Color::Green);
+
+	fovY = 90;
+	aspect = 1.0f;
+	zNear = 1.0f;
+	zFar = 300.0f;
+	fH = tan(fovY / 360 * pi) * zNear;
+	fW = fH * aspect;
+
+	// define a perspective projection
+	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
+
+	lx = 0.0f;
+	lz = -1.0f;
+	angle = 0.0f;
+
+	xPos = 5;
+	zPos = 5;
+	yPos = 1;
+
+	turnSpeed = 0.000009f; // speed of turning
+	movementSpeed = 0.00003f;
 }
 
 Player::~Player()
 {
 }
 
-void Player::update(sf::Vector3f &playerPos, sf::Vector3f &playerRotation)
+void Player::checkInput()
 {
-	this->playerPos = playerPos;
-	this->playerRotation = playerRotation;
-
-	// update x,y,z position
-	glTranslatef(playerPos.x, playerPos.y, playerPos.z); // position the cube model at z-position -5; ie. away from us
-	
-	// rotate x,y,z by a given angle in degrees
-	glRotatef(playerRotation.x * 20, 0.0f, 1.0f, 0.f); // rotate around the x-axis
-	glRotatef(playerRotation.y * 20, 1.0f, 0.0f, 0.f); // rotate around the y-axis
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		xPos += lx * movementSpeed;
+		zPos += lz * movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		angle -= turnSpeed;
+		lx = sin(angle);
+		lz = -cos(angle);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		xPos -= lx * movementSpeed;
+		zPos -= lz * movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		angle += turnSpeed;
+		lx = sin(angle);
+		lz = -cos(angle);
+	}
 }
 
-sf::Vector3f Player::getPlayerPos()
+void Player::update()
 {
-	return playerPos;
+	// Update health bar
+	healthBar.setSize(sf::Vector2f(hitPoints * 4.f, healthBarHeight));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	pos = sf::Vector3f(xPos, yPos, zPos);
+
+	// A and D rotate left and right at the moment
+	gluLookAt(pos.x, pos.y, pos.z,
+		xPos + lx, 1.0f, zPos + lz,
+		0.0f, 1.0f, 0.0f);
 }
 
-sf::Vector3f Player::getPlayerRotation()
+void Player::drawHealthBar(sf::RenderWindow &window)
 {
-	return playerRotation;
+	window.draw(healthBar);
 }
+
+//http://stackoverflow.com/questions/6171092/how-to-make-camera-follow-a-3d-object-in-opengl
+//https://www.opengl.org/archives/resources/faq/technical/viewing.htm
