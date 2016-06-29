@@ -31,7 +31,8 @@ void processEvents(sf::RenderWindow &window)
 int main()
 {
 	// Create the main window
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Cubed");
+	sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+	sf::RenderWindow window(desktop, "Cubed", sf::Style::None);
 
 	// Create a clock for measuring time elapsed
 	sf::Clock Clock;
