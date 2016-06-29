@@ -6,6 +6,7 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/OpenGL.hpp"
 #include "Character.h"
+#include "SelectionMenu.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -53,7 +54,10 @@ int main()
 
 	// Instantiate player and enemy and give each 100 health
 	Enemy enemy = Enemy(100);
-	Player player = Player(100,window.getSize().x,window.getSize().y);
+	Player player = Player(100,window.getSize().x, window.getSize().y);
+
+	// object for display menu
+	SelectionMenu menu = SelectionMenu(window.getSize().x, window.getSize().y);
 
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -69,9 +73,6 @@ int main()
 		
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
-			if (player.getAlive())
-				player.checkInput();
-
 			// Temporary to test damage taking
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
 			{
@@ -89,6 +90,9 @@ int main()
 			// Clear color and depth buffer
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear z-buffer and set previously selected colour
 			
+																// Perform all 2D drawing of SFML shapes and text here. SFML uses openGL to draw these things, which can mess
+					
+															// with the rendering if not between push and pop states
 			player.update(window);
 
 			//Simple ground to give us some frame of reference
@@ -104,12 +108,25 @@ int main()
 			glColor3f(1, 0, 0);
 			enemy.draw();
 
-			// Perform all 2D drawing of SFML shapes and text here. SFML uses openGL to draw these things, which can mess
-			// with the rendering if not between push and pop states
 			window.pushGLStates();
-			player.drawHud(window);
-			if (!player.getAlive())
-				player.die(window);
+			if (menu.getInMainMenu())
+			{
+				menu.showMenu(window,player);
+			}
+			else
+			{
+				
+				if (player.getAlive())
+				{
+					player.drawHud(window);
+					player.checkInput();
+				}
+				else
+				{
+					menu.showMenu(window, player);
+				}
+				
+			}
 			window.popGLStates();
 
 			glEnable(GL_DEPTH_TEST);

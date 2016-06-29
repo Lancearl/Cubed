@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="SelectionMenu.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClCompile Include="Cubed.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="SelectionMenu.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

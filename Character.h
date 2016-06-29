@@ -38,6 +38,7 @@ public:
 	void checkInput();
 	void drawHud(sf::RenderWindow &window);
 	void die(sf::RenderWindow &window);
+	void resetGameValues();
 
 private:
 	const GLdouble pi = 3.1415926535897932384626433832795;
@@ -63,15 +64,9 @@ private:
 	float movementSpeed; // movement speed
 
 	sf::RectangleShape healthBar;
-	sf::RectangleShape colourOverlay;
 	sf::CircleShape crosshair;
 
-	sf::Font font;
-
-	sf::Text text;
-	sf::Text restart;
-	sf::Text quit;
-
+	// For turn with mouse
 	sf::Vector2f mouseCurrent;
 	sf::Vector2f mousePrevious;
 };
