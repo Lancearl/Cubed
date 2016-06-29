@@ -49,7 +49,7 @@ int main()
 
 	// Instantiate player and enemy and give each 100 health
 	Enemy enemy = Enemy(100);
-	Player player = Player(100);
+	Player player = Player(100,window.getSize().x,window.getSize().y);
 
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -59,7 +59,8 @@ int main()
 	{
 
 		// Check for player input and move player camera accordingly
-		player.checkInput();
+		if(player.getAlive())
+			player.checkInput();
 
 		timeSinceLastUpdate += clock.restart();
 		
@@ -87,10 +88,10 @@ int main()
 			//Simple ground to give us some frame of reference
 			glColor3f(0.9f, 0.9f, 0.9f);
 			glBegin(GL_QUADS);
-			glVertex3f(-120.0f, -5.0f, -100.0f);
-			glVertex3f(-120.0f, -5.0f, 100.0f);
-			glVertex3f(120.0f, -5.0f, 100.0f);
-			glVertex3f(120.0f, -5.0f, -100.0f);
+			glVertex3f(-30.0f, -5.0f, -30.0f);
+			glVertex3f(-30.0f, -5.0f, 30.0f);
+			glVertex3f(30.0f, -5.0f, 30.0f);
+			glVertex3f(30.0f, -5.0f, -30.0f);
 			glEnd();
 
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -101,6 +102,8 @@ int main()
 			// with the rendering if not between push and pop states
 			window.pushGLStates();
 			player.drawHealthBar(window);
+			if (!player.getAlive())
+				player.die(window);
 			window.popGLStates();
 
 			glEnable(GL_DEPTH_TEST);
