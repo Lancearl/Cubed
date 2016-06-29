@@ -43,8 +43,8 @@ Player::Player(int hitPoints, int width, int height)
 	// height of player above ground, 1 seems about right
 	pos.y = 1.0f;
 
-	turnSpeed = 0.000009f; // speed of turning
-	movementSpeed = 0.00003f;
+	turnSpeed = 0.05; // speed of turning
+	movementSpeed = 0.2;
 
 	// gravity * acceleration to progressively increase rate of falling
 	gravity = 0.3;

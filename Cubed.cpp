@@ -33,6 +33,7 @@ int main()
 	// Create the main window
 	sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
 	sf::RenderWindow window(desktop, "Cubed", sf::Style::None);
+	window.setVerticalSyncEnabled(true);
 
 	// Create a clock for measuring time elapsed
 	sf::Clock Clock;
@@ -41,7 +42,8 @@ int main()
 
 	//prepare OpenGL surface for Hidden Surface Removal (HSR)
 	glClearDepth(1.f); // clear the z-buffer/depth buffer completely +1.0f is the furtherest away
-	glClearColor(0.3f, 0.3f, 0.3f, 0.f); // set the background colour for when we clear the screen RGBA values in the 0.0 to 1.0 range. This gives us a nice grey background.
+	glClearColor(0.f, 0.f, 0.f, 0.f); // set the background colour for when we clear the screen RGBA values in the 0.0 to 1.0 range. This gives us a nice grey background.
+
 
 	// Setup a perspective projection & Camera position
 	// GL_PROJECTION what we actually see
@@ -58,15 +60,17 @@ int main()
 	// Start game loop
 	while (window.isOpen())
 	{
-
+		
 		// Check for player input and move player camera accordingly
-		if(player.getAlive())
-			player.checkInput();
+		
 
 		timeSinceLastUpdate += clock.restart();
 		
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
+			if (player.getAlive())
+				player.checkInput();
+
 			// Temporary to test damage taking
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
 			{
