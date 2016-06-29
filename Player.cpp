@@ -34,8 +34,11 @@ Player::Player(int hitPoints, int width, int height)
 	// used to ensure that the W and S keys move the player forward and backwards according to
 	// where the camera is facing
 	lx = 0.0f;
+	ly = 0.0f;
 	lz = -1.0f;
+
 	angle = 0.0f;
+	angley = 0.0f;
 
 	// player position
 	pos.x = 0.0f;
@@ -43,7 +46,7 @@ Player::Player(int hitPoints, int width, int height)
 	// height of player above ground, 1 seems about right
 	pos.y = 1.0f;
 
-	turnSpeed = 0.05; // speed of turning
+	turnSpeed = 0.04; // speed of turning
 	movementSpeed = 0.2;
 
 	// gravity * acceleration to progressively increase rate of falling
@@ -77,6 +80,14 @@ Player::Player(int hitPoints, int width, int height)
 	quit.setStyle(sf::Text::Bold);
 	quit.setColor(sf::Color::Black);
 	quit.setPosition(width / 2 - (quit.getLocalBounds().width / 2), height / 2 - (quit.getLocalBounds().height) + restart.getLocalBounds().height * 4);
+
+	mouseCurrent = sf::Vector2f(0.f,0.f);
+	mousePrevious = sf::Vector2f(0.f,0.f);
+
+	// crosshair
+	crosshair = sf::CircleShape(2.f);
+	crosshair.setPosition(width / 2 - (crosshair.getLocalBounds().width / 2), height / 2 - (crosshair.getLocalBounds().height / 2));
+	crosshair.setFillColor(sf::Color::White);
 }
 
 Player::~Player()
@@ -119,7 +130,9 @@ void Player::die(sf::RenderWindow &window)
 			gravity = 0.3;
 			lx = 0.0f;
 			lz = -1.0f;
+			ly = 0.0f;
 			angle = 0.0f;
+			angley = 0.0f;
 			window.setMouseCursorVisible(false);
 		}
 	}
@@ -133,29 +146,25 @@ void Player::die(sf::RenderWindow &window)
 
 void Player::checkInput()
 {
-	sf::Event event;
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		pos.x += lx * movementSpeed;
-		pos.z += lz * movementSpeed;
+		pos.x += sin(angle) * movementSpeed;
+		pos.z += -cos(angle) * movementSpeed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		pos.x -= lx * movementSpeed;
-		pos.z -= lz * movementSpeed;
+		pos.x -= sin(angle) * movementSpeed;
+		pos.z -= -cos(angle) * movementSpeed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		angle -= turnSpeed;
-		lx = sin(angle);
-		lz = -cos(angle);
+		pos.x -= sin(angle+ 89.537) * movementSpeed;
+		pos.z -= -cos(angle+ 89.537) * movementSpeed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		angle += turnSpeed;
-		lx = sin(angle);
-		lz = -cos(angle);
+		pos.x -= sin(angle- 89.537) * movementSpeed;
+		pos.z -= -cos(angle- 89.537) * movementSpeed;
 	}
 	// print out player position
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
@@ -164,10 +173,50 @@ void Player::checkInput()
 		cout << pos.y << endl;
 		cout << pos.z << endl;
 	}
+	//right
+	if (mouseCurrent.x > mousePrevious.x)
+	{
+		angle += turnSpeed;
+	}
+	// left
+	if (mouseCurrent.x < mousePrevious.x)
+	{
+		angle -= turnSpeed;
+	}
+	/**
+	// down
+	if (mouseCurrent.y > mousePrevious.y)
+	{
+		if(angley < 10)
+			angley += turnSpeed;
+		ly = -sin(angley);
+	}
+	// up
+	if (mouseCurrent.y < mousePrevious.y )
+	{
+		if (angley > -10)
+			angley += turnSpeed;
+		ly = sin(angley);
+	}*/
 }
 
-void Player::update()
+void Player::update(sf::RenderWindow &window)
 {
+	mousePrevious = mouseCurrent;
+	mouseCurrent = sf::Vector2f(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+
+	if (mouseCurrent.x > window.getSize().x - 10.f || mouseCurrent.x < 10.f || mouseCurrent.y > window.getSize().y - 10.f || mouseCurrent.y < 10.f)
+	{
+		sf::Mouse::setPosition(sf::Vector2i(window.getSize().x/2,window.getSize().y/2));
+		mousePrevious = mouseCurrent;
+
+		if (mouseCurrent.x < mousePrevious.x)
+			mousePrevious.x = -55;
+		else
+			mousePrevious.x = 55;
+			
+	}
+
 	// Update health bar
 	healthBar.setSize(sf::Vector2f(hitPoints * 4.f, healthBarHeight));
 
@@ -192,14 +241,15 @@ void Player::update()
 	healthBar.setSize(sf::Vector2f(hitPoints * 4.f, healthBarHeight));
 
 	// update where the camera/player is looking
-	gluLookAt(pos.x, pos.y, pos.z,
-		pos.x + lx, pos.y, pos.z + lz,
-		0.0f, 1.0f, 0.0f);
+	gluLookAt(pos.x, pos.y, pos.z, // eye location
+		pos.x + sin(angle), pos.y + ly, pos.z + -cos(angle), // angle camera is looking at
+		0.0f, 1.0f, 0.0f); // up direction
 }
 
-void Player::drawHealthBar(sf::RenderWindow &window)
+void Player::drawHud(sf::RenderWindow &window)
 {
 	window.draw(healthBar);
+	window.draw(crosshair);
 }
 
 //http://stackoverflow.com/questions/6171092/how-to-make-camera-follow-a-3d-object-in-opengl

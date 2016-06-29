@@ -34,9 +34,9 @@ public:
 	Player();
 	Player(int hitPoints, int width, int height);
 	~Player();
-	void update();
+	void update(sf::RenderWindow &window);
 	void checkInput();
-	void drawHealthBar(sf::RenderWindow &window);
+	void drawHud(sf::RenderWindow &window);
 	void die(sf::RenderWindow &window);
 
 private:
@@ -48,8 +48,11 @@ private:
 	GLdouble fW, fH;
 
 	float lx;
+	float ly;
 	float lz;
+
 	float angle;
+	float angley;
 	float gravity;
 	float acceleration;
 
@@ -61,11 +64,15 @@ private:
 
 	sf::RectangleShape healthBar;
 	sf::RectangleShape colourOverlay;
+	sf::CircleShape crosshair;
 
 	sf::Font font;
 
 	sf::Text text;
 	sf::Text restart;
 	sf::Text quit;
+
+	sf::Vector2f mouseCurrent;
+	sf::Vector2f mousePrevious;
 };
 

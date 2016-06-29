@@ -89,7 +89,7 @@ int main()
 			// Clear color and depth buffer
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear z-buffer and set previously selected colour
 			
-			player.update();
+			player.update(window);
 
 			//Simple ground to give us some frame of reference
 			glColor3f(0.9f, 0.9f, 0.9f);
@@ -107,7 +107,7 @@ int main()
 			// Perform all 2D drawing of SFML shapes and text here. SFML uses openGL to draw these things, which can mess
 			// with the rendering if not between push and pop states
 			window.pushGLStates();
-			player.drawHealthBar(window);
+			player.drawHud(window);
 			if (!player.getAlive())
 				player.die(window);
 			window.popGLStates();
