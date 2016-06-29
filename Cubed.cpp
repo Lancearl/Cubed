@@ -34,6 +34,7 @@ int main()
 	sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
 	sf::RenderWindow window(desktop, "Cubed", sf::Style::None);
 	window.setVerticalSyncEnabled(true);
+	window.setMouseCursorVisible(false);
 
 	// Create a clock for measuring time elapsed
 	sf::Clock Clock;

@@ -85,6 +85,7 @@ Player::~Player()
 
 void Player::die(sf::RenderWindow &window)
 {
+	window.setMouseCursorVisible(true);
 	// Draw all game overtext
 	window.draw(colourOverlay);
 	window.draw(text);
@@ -119,6 +120,7 @@ void Player::die(sf::RenderWindow &window)
 			lx = 0.0f;
 			lz = -1.0f;
 			angle = 0.0f;
+			window.setMouseCursorVisible(false);
 		}
 	}
 	// if cursor isn't in either bounding box, set text colour back to black
