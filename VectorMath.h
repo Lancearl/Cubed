@@ -64,6 +64,7 @@ namespace vm
 		sf::Vector2<T> newVector = sf::Vector2<T>();
 		newVector.x = vec.x;
 		newVector.y = vec.z;
+		return newVector;
 	}
 
 }
