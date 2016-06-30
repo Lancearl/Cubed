@@ -13,6 +13,10 @@ Mesh::~Mesh()
 
 void Mesh::draw()
 {
+	glPushMatrix();
+
+	glTranslatef(xLoc, yLoc, zLoc);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
@@ -20,6 +24,22 @@ void Mesh::draw()
 	glDrawElements(GL_TRIANGLES, vertexIndices.size(), GL_UNSIGNED_INT, &vertexIndices[0]);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glPopMatrix();
+}
+
+void Mesh::setLocation(sf::Vector2f location) {
+	xLoc = location.x;
+	zLoc = location.y;
+}
+
+void Mesh::setLocation(sf::Vector3f location) {
+	xLoc = location.x;
+	zLoc = location.y;
+	yLoc = location.z;
+}
+
+void Mesh::setheight(float height) {
+	yLoc = height;
 }
 
 bool Mesh::load(const char* filename)
