@@ -25,12 +25,6 @@ public:
 	void setheight(float height);
 	float getWidth();
 
-	///Do not delete:
-	//bool load(const char* filename, 
-	//	std::vector < sf::Vector3f > & out_vertices,
-	//	std::vector < sf::Vector2f > & out_uvs,
-	//	std::vector < sf::Vector3f > & out_normals);
-
 private:
 	int xLoc = 0;
 	int zLoc = 0;

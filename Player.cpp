@@ -116,6 +116,11 @@ void Player::checkInput()
 			angley += turnSpeed;
 		ly = sin(angley);
 	}*/
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	{
+		projectiles.push_back(Projectile("Models/cube3.obj", crosshair.getPosition(), sf::Vector2f(pos.x + sin(angle), pos.z + -cos(angle))));
+	}
 }
 
 

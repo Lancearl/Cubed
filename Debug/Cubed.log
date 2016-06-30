@@ -1,9 +1,20 @@
-﻿Build started 30/06/2016 9:06:20 p.m..
+﻿Build started 30/06/2016 10:38:45 p.m..
      1>Project "C:\Users\User\Desktop\Uni\Semester 1 - 2016\ISCG7441 - Advanced Game Programming\Assignment 2\Cubed\Cubed\Cubed.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Temp\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\Cubed.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Cubed.cpp
+         Cubed.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\User\Desktop\Uni\Semester 1 - 2016\ISCG7441 - Advanced Game Programming\Assignment 2\Cubed\Cubed\Debug\Cubed.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Temp\glew-1.13.0\lib" /LIBPATH:"C:\Temp\SFML-2.3.2\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-main-d.lib" "sfml-audio-d.lib" glu32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\User\Desktop\Uni\Semester 1 - 2016\ISCG7441 - Advanced Game Programming\Assignment 2\Cubed\Cubed\Debug\Cubed.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\User\Desktop\Uni\Semester 1 - 2016\ISCG7441 - Advanced Game Programming\Assignment 2\Cubed\Cubed\Debug\Cubed.lib" /MACHINE:X86 Debug\Player.obj
+         Debug\Character.obj
+         Debug\Cubed.obj
+         Debug\Mesh.obj
+         Debug\Enemy.obj
+         Debug\Projectile.obj
+         Debug\SelectionMenu.obj
+         Debug\stdafx.obj
          Cubed.vcxproj -> C:\Users\User\Desktop\Uni\Semester 1 - 2016\ISCG7441 - Advanced Game Programming\Assignment 2\Cubed\Cubed\Debug\Cubed.exe
      1>Done Building Project "C:\Users\User\Desktop\Uni\Semester 1 - 2016\ISCG7441 - Advanced Game Programming\Assignment 2\Cubed\Cubed\Cubed.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.10
+Time Elapsed 00:00:02.65

@@ -32,8 +32,9 @@ void processEvents(sf::RenderWindow &window)
 int main()
 {
 	// Create the main window
-	sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-	sf::RenderWindow window(desktop, "Cubed", sf::Style::None);
+	//sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+	//sf::RenderWindow window(desktop, "Cubed", sf::Style::None);
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML OpenGL");
 	window.setVerticalSyncEnabled(true);
 	window.setMouseCursorVisible(false);
 
@@ -119,6 +120,16 @@ int main()
 				{
 					player.testCollision(projectile.location, projectile.getBounds());
 				}
+
+				for each(Projectile projectile in player.projectiles)
+				{
+					projectile.move(); //Have commented out the code mesh.draw in this method - LD
+					if (enemy.testCollision(projectile.location, projectile.getBounds()));
+					{
+						std::cout << "a hit!" << "\n"; //just some debug information
+					}
+				}
+
 				if (player.getAlive())
 				{
 					player.drawHud(window);
