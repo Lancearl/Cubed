@@ -115,8 +115,9 @@ int main()
 			}
 			else
 			{
-				for each(Projectile projectile in enemy.projectiles) {
-					player.testCollision(projectile.location, projectile.getBounds);
+				for each(Projectile projectile in enemy.projectiles) 
+				{
+					player.testCollision(projectile.location, projectile.getBounds());
 				}
 				if (player.getAlive())
 				{

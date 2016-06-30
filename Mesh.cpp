@@ -44,21 +44,26 @@ void Mesh::setheight(float height) {
 
 //returns the radius based on the maximum distance between 
 float Mesh::getWidth() {
-	float min = 1000; //here's hiping the shape's min isn't greater than that
-	float max = 0; // as above but reversed :D
+	float min = 1000;	// here's hoping the shape's min isn't greater than that
+	float max = 0;		// as above but reversed :D
 
 	float difference = 0;
 
-	for (int i = 0; i < 3; i++) {
-		for (int i = 0; i < vertices.size; i += 3) {
-			if (vertices[i] < min) {
+	for (int i = 0; i < 3; i++) 
+	{
+		for (int i = 0; i < vertices.size(); i += 3) 
+		{
+			if (vertices[i] < min) 
+			{
 				min = vertices[i];
 			}
-			else if (vertices[i] > max) {
+			else if (vertices[i] > max) 
+			{
 				max = vertices[i];
 			}
 		}
-		if (difference < (max - min)) {
+		if (difference < (max - min)) 
+		{
 			difference = max - min;
 		}
 	}
