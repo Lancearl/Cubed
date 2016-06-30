@@ -11,6 +11,7 @@ public:
 	sf::Vector3f pos;
 	void takeDamage(int damage);
 	bool getAlive();
+	bool testCollision(sf::Vector2f object, float BoundSize);
 
 	std::vector<Projectile> projectiles;
 protected:

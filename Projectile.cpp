@@ -18,6 +18,10 @@ void Projectile::move() {
 	mesh.draw();
 }
 
+float Projectile::getBounds(){
+	return mesh.getWidth();
+}
+
 Projectile::~Projectile()
 {
 }

@@ -23,6 +23,7 @@ public:
 	void setLocation(sf::Vector2f location);
 	void setLocation(sf::Vector3f location);
 	void setheight(float height);
+	float getWidth();
 
 	///Do not delete:
 	//bool load(const char* filename, 

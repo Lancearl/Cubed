@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Character.h"
+#include "VectorMath.h"
 #include <iostream>
 
 using namespace std;
@@ -115,6 +116,15 @@ void Player::checkInput()
 			angley += turnSpeed;
 		ly = sin(angley);
 	}*/
+}
+
+
+bool Character::testCollision(sf::Vector2f object, float objectBounds) {
+	sf::Vector2f distance = object - vm::flatten(pos);
+	if (abs(vm::magnitude(distance)) < objectBounds) {
+		return true;
+	}
+	return false;
 }
 
 void Player::update(sf::RenderWindow &window)

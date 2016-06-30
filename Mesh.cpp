@@ -42,6 +42,29 @@ void Mesh::setheight(float height) {
 	yLoc = height;
 }
 
+//returns the radius based on the maximum distance between 
+float Mesh::getWidth() {
+	float min = 1000; //here's hiping the shape's min isn't greater than that
+	float max = 0; // as above but reversed :D
+
+	float difference = 0;
+
+	for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < vertices.size; i += 3) {
+			if (vertices[i] < min) {
+				min = vertices[i];
+			}
+			else if (vertices[i] > max) {
+				max = vertices[i];
+			}
+		}
+		if (difference < (max - min)) {
+			difference = max - min;
+		}
+	}
+	return difference;
+}
+
 bool Mesh::load(const char* filename)
 {
 	std::ifstream file(filename);
