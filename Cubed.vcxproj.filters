@@ -33,10 +33,10 @@
     <ClInclude Include="SelectionMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\Desktop\Projectile.h">
+    <ClInclude Include="Projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\..\Desktop\VectorMath.h">
+    <ClInclude Include="VectorMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,16 +62,8 @@
     <ClCompile Include="SelectionMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\..\Desktop\Projectile.cpp">
+    <ClCompile Include="Projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\..\..\..\..\Public\Desktop\TeamViewer 11.lnk">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\..\..\..\..\..\..\Desktop\ScpService.lnk">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
