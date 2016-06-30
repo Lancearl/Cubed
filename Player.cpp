@@ -61,7 +61,7 @@ void Player::resetGameValues()
 	angle = 0.0f;
 	angley = 0.0f;
 }
-
+//Checks for user input via Left,Right,UP,Down. 
 void Player::checkInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -131,7 +131,7 @@ bool Character::testCollision(sf::Vector2f object, float objectBounds) {
 	}
 	return false;
 }
-
+//Updates the mouse postion within the game world.
 void Player::update(sf::RenderWindow &window)
 {
 	mousePrevious = mouseCurrent;
@@ -177,7 +177,7 @@ void Player::update(sf::RenderWindow &window)
 		pos.x + sin(angle), pos.y + ly, pos.z + -cos(angle), // angle camera is looking at
 		0.0f, 1.0f, 0.0f); // up direction
 }
-
+//Draws the player connected visuals such as health and the crosshair.
 void Player::drawHud(sf::RenderWindow &window)
 {
 	window.draw(healthBar);

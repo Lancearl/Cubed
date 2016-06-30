@@ -4,7 +4,7 @@
 #include "character.h"
 
 using namespace std;
-
+//Menu Varaiables
 class SelectionMenu
 {
 public:

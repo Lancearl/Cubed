@@ -34,7 +34,7 @@ protected:
 	Mesh mesh;
 
 };
-
+// The players varaiables
 class Player : public Character
 {
 public:

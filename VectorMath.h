@@ -25,7 +25,7 @@ namespace vm
 
 		return vector;
 	};
-
+	// To get the Angle of the vector
 	template <class T>
 	float inline getAngle(const sf::Vector2<T> &vec)
 	{

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SelectionMenu.h"
 
-
+//Sets the postion of the menus on the screen both the start and the death menus
 SelectionMenu::SelectionMenu(int aWidth, int aHeight)
 {
 	if (!font.loadFromFile("fonts/arial.ttf"))
@@ -47,7 +47,7 @@ SelectionMenu::SelectionMenu(int aWidth, int aHeight)
 SelectionMenu::~SelectionMenu()
 {
 }
-
+//Displays the death menu after you die
 void SelectionMenu::setDoneMainMenu()
 {
 	text.setString("You Died");
@@ -64,7 +64,7 @@ bool SelectionMenu::getInMainMenu()
 {
 	return inMainMenu;
 }
-
+// Checks postion of the mouse on the menu lists and highlights the colour so show which is being pressed.
 void SelectionMenu::showMenu(sf::RenderWindow &window, Player &player)
 {
 	window.setMouseCursorVisible(true);

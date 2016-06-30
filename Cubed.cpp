@@ -126,8 +126,10 @@ int main()
 					projectile.move(); //Have commented out the code mesh.draw in this method - LD
 					if (enemy.testCollision(projectile.location, projectile.getBounds()));
 					{
-						std::cout << "a hit!" << "\n"; //just some debug information
+						//std::cout << "a hit!" << "\n"; //just some debug information						
 					}
+					
+					
 				}
 
 				if (player.getAlive())

@@ -10,7 +10,7 @@ Mesh::Mesh()
 Mesh::~Mesh()
 {
 }
-
+//Mesh varaiables
 void Mesh::draw()
 {
 	glPushMatrix();
