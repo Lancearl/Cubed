@@ -19,9 +19,8 @@ public:
 
 	void draw();
 	bool load(const char* filename);
-	<< << << < HEAD
 
-		void setLocation(sf::Vector2f location);
+	void setLocation(sf::Vector2f location);
 	void setLocation(sf::Vector3f location);
 	void setheight(float height);
 
@@ -39,6 +38,4 @@ private:
 	int xRot = 0;
 	int yRot = 0;
 	int zRot = 0;
-	== == == =
-		>> >> >> > origin / master
 };

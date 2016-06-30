@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include "Projectile.h"
 
 #pragma once
 class Character
@@ -10,10 +11,13 @@ public:
 	sf::Vector3f pos;
 	void takeDamage(int damage);
 	bool getAlive();
+
+	std::vector<Projectile> projectiles;
 protected:
 	int hitPoints;
 	int maxHitPoints;
 	bool alive;
+
 };
 
 class Enemy : public Character 
@@ -24,8 +28,10 @@ public:
 	~Enemy();
 	void update(sf::Vector3f &playerPos, sf::Vector3f &playerRotation);
 	void draw();
+	void shoot(sf::Vector3f playerPos);
 protected:
 	Mesh mesh;
+
 };
 
 class Player : public Character
