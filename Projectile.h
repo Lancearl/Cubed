@@ -4,15 +4,18 @@
 class Projectile
 {
 public:
-	Projectile(char* projectileMesh, sf::Vector2f origin, sf::Vector2f direction);
+	Projectile();
+	Projectile(sf::Vector2f origin, sf::Vector2f direction);
+	Projectile(const char* projectileMesh, sf::Vector2f origin, sf::Vector2f direction);
 	void move();
 	sf::Vector2f location;
 	float getBounds();
+	void setLocation(sf::Vector2f origin, sf::Vector2f direction);
 
 	~Projectile();
 private:
 	const int VELOCITY = 20;
-	const int PROJECTILE_HEIGHT = 10;
+	const int PROJECTILE_HEIGHT = 1;
 	Mesh mesh;
 	sf::Vector2f velocity;
 };

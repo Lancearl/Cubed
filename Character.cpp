@@ -30,5 +30,3 @@ sf::Vector3f Character::getPos()
 {
 	return pos;
 }
-
-

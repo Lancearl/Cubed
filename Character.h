@@ -12,13 +12,11 @@ public:
 	void takeDamage(int damage);
 	bool getAlive();
 	bool testCollision(sf::Vector2f object, float BoundSize);
-
 	std::vector<Projectile> projectiles;
 protected:
 	int hitPoints;
 	int maxHitPoints;
 	bool alive;
-
 };
 
 class Enemy : public Character 
@@ -42,7 +40,7 @@ public:
 	Player(int hitPoints, int width, int height);
 	~Player();
 	void update(sf::RenderWindow &window);
-	void checkInput();
+	void checkInput(sf::RenderWindow &window);
 	void drawHud(sf::RenderWindow &window);
 	void die(sf::RenderWindow &window);
 	void resetGameValues();

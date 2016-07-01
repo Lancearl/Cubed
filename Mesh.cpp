@@ -20,7 +20,7 @@ void Mesh::draw()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-	glNormalPointer(GL_FLOAT, 0, &normals);
+	glNormalPointer(GL_FLOAT, 0, &normals[0]);
 	glDrawElements(GL_TRIANGLES, vertexIndices.size(), GL_UNSIGNED_INT, &vertexIndices[0]);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -38,7 +38,7 @@ void Mesh::setLocation(sf::Vector3f location) {
 	yLoc = location.z;
 }
 
-void Mesh::setheight(float height) {
+void Mesh::setHeight(float height) {
 	yLoc = height;
 }
 

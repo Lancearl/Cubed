@@ -5,6 +5,42 @@
 
 using namespace std;
 
+Player::Player()
+{
+	// used to return player to max hit points if they restart
+	this->maxHitPoints = 100;
+
+	// set intial game values
+	resetGameValues();
+	// acceleration to progressively increase rate of falling
+	acceleration = 1.05;
+
+	// Health bar
+	healthBarHeight = 20.f;
+	healthBar = sf::RectangleShape(sf::Vector2f(hitPoints * 4, healthBarHeight));
+	healthBar.setPosition(5, 5);
+	healthBar.setFillColor(sf::Color::Green);
+
+	fovY = 90;
+	aspect = 1.0f;
+	zNear = 1.0f;
+	zFar = 300.0f;
+	fH = tan(fovY / 360 * pi) * zNear;
+	fW = fH * aspect;
+
+	// define a perspective projection
+	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
+
+
+	turnSpeed = 0.04; // speed of turning
+	movementSpeed = 0.15;
+
+	// crosshair
+	crosshair = sf::CircleShape(2.f);
+	crosshair.setPosition(1920 / 2 - (crosshair.getLocalBounds().width / 2), 1080 / 2 - (crosshair.getLocalBounds().height / 2));
+	crosshair.setFillColor(sf::Color::White);
+}
+
 Player::Player(int hitPoints, int width, int height)
 {
 	// used to return player to max hit points if they restart
@@ -62,7 +98,7 @@ void Player::resetGameValues()
 	angley = 0.0f;
 }
 //Checks for user input via Left,Right,UP,Down. 
-void Player::checkInput()
+void Player::checkInput(sf::RenderWindow &window)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
@@ -76,13 +112,13 @@ void Player::checkInput()
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		pos.x -= sin(angle+ 89.537) * movementSpeed;
-		pos.z -= -cos(angle+ 89.537) * movementSpeed;
+		pos.x -= sin(angle + 89.537) * movementSpeed;
+		pos.z -= -cos(angle + 89.537) * movementSpeed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		pos.x -= sin(angle- 89.537) * movementSpeed;
-		pos.z -= -cos(angle- 89.537) * movementSpeed;
+		pos.x -= sin(angle - 89.537) * movementSpeed;
+		pos.z -= -cos(angle - 89.537) * movementSpeed;
 	}
 	// print out player position
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
@@ -105,21 +141,39 @@ void Player::checkInput()
 	// down
 	if (mouseCurrent.y > mousePrevious.y)
 	{
-		if(angley < 10)
-			angley += turnSpeed;
-		ly = -sin(angley);
+	if(angley < 10)
+	angley += turnSpeed;
+	ly = -sin(angley);
 	}
 	// up
 	if (mouseCurrent.y < mousePrevious.y )
 	{
-		if (angley > -10)
-			angley += turnSpeed;
-		ly = sin(angley);
+	if (angley > -10)
+	angley += turnSpeed;
+	ly = sin(angley);
 	}*/
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	sf::Event event;
+	while (window.pollEvent(event))
 	{
-		projectiles.push_back(Projectile("Models/cube3.obj", crosshair.getPosition(), sf::Vector2f(pos.x + sin(angle), pos.z + -cos(angle))));
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			//Left as switch event incase we add more functionality, eg a right mouse click
+			switch (event.key.code)
+			{
+			case (sf::Mouse::Button::Left) : //Shoot event
+				projectiles.push_back(Projectile(vm::flatten(pos), sf::Vector2f(sin(angle) * movementSpeed, -cos(angle) * movementSpeed)));
+				break;
+			}
+		}
+
+		// Close window : exit
+		if (event.type == sf::Event::Closed)
+			window.close();
+
+		// Escape key : exit
+		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
+			window.close();
 	}
 }
 

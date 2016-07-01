@@ -16,17 +16,17 @@ sf::Time TimePerFrame = sf::seconds(1.f / 60);
 
 void processEvents(sf::RenderWindow &window)
 {
-	sf::Event event;
-	while (window.pollEvent(event))
-	{
-		// Close window : exit
-		if (event.type == sf::Event::Closed)
-			window.close();
+	//sf::Event event;
+	//while (window.pollEvent(event))
+	//{
+	//	// Close window : exit
+	//	if (event.type == sf::Event::Closed)
+	//		window.close();
 
-		// Escape key : exit
-		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
-			window.close();		
-	}
+	//	// Escape key : exit
+	//	if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
+	//		window.close();		
+	//}
 }
 
 int main()
@@ -90,10 +90,9 @@ int main()
 			//Prepare for drawing
 			// Clear color and depth buffer
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear z-buffer and set previously selected colour
-			
-																// Perform all 2D drawing of SFML shapes and text here. SFML uses openGL to draw these things, which can mess
-					
-															// with the rendering if not between push and pop states
+															
+			/* Perform all 2D drawing of SFML shapes and text here. SFML uses openGL to draw these things, which can mess
+			/  with the rendering if not between push and pop states */
 			player.update(window);
 
 			//Simple ground to give us some frame of reference
@@ -109,6 +108,20 @@ int main()
 			glColor3f(1, 0, 0);
 			enemy.draw();
 
+			for each(Projectile projectile in enemy.projectiles)
+			{
+				player.testCollision(projectile.location, projectile.getBounds());
+			}
+
+			for each(Projectile projectile in player.projectiles)
+			{
+				projectile.move();
+				if (enemy.testCollision(projectile.location, projectile.getBounds()));
+				{
+					//std::cout << "a hit!" << "\n"; //just some debug information						
+				}
+			}
+
 			window.pushGLStates();
 			if (menu.getInMainMenu())
 			{
@@ -116,26 +129,10 @@ int main()
 			}
 			else
 			{
-				for each(Projectile projectile in enemy.projectiles) 
-				{
-					player.testCollision(projectile.location, projectile.getBounds());
-				}
-
-				for each(Projectile projectile in player.projectiles)
-				{
-					projectile.move(); //Have commented out the code mesh.draw in this method - LD
-					if (enemy.testCollision(projectile.location, projectile.getBounds()));
-					{
-						//std::cout << "a hit!" << "\n"; //just some debug information						
-					}
-					
-					
-				}
-
 				if (player.getAlive())
 				{
 					player.drawHud(window);
-					player.checkInput();
+					player.checkInput(window);
 				}
 				else
 				{

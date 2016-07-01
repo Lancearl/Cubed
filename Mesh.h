@@ -22,7 +22,7 @@ public:
 
 	void setLocation(sf::Vector2f location);
 	void setLocation(sf::Vector3f location);
-	void setheight(float height);
+	void setHeight(float height);
 	float getWidth();
 
 private:

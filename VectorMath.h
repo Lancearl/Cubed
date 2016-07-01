@@ -65,6 +65,5 @@ namespace vm
 		newVector.x = vec.x;
 		newVector.y = vec.z;
 		return newVector;
-	}
-
+	};
 }
